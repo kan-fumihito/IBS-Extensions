@@ -1,30 +1,60 @@
 //秘密鍵生成
-let getSecretKey2 = async (ID) => {
+let getSecretKey2 = async(ID, time) => {
     let token = getJWT()
     if (token === null || typeof token === 'undefined') {
         console.log('token is none')
         return null
     }
 
-    let res = await axios.get('https://key.project15.tk:8443/secretkey2', {
-        headers: {
-            'Authorization': `Bearer ${token}`
+    try {
+        let res = await axios.get('https://key.project15.tk/api/secretkey2', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'time': time
+            }
+        })
+        let len = Object.keys(res.data).length
+        console.log(res.data[0])
+        let data = new Uint8Array(len)
+        for (i = 0; i < len; i++) {
+            data[i] = res.data[i]
         }
-    })
-    return res.data //可能な形にして
+        let key = new mcl.G2()
+        key.deserialize(data)
+        return key
+    } catch (e) {
+        dom.getElementById('log').innerText = e
+        return null
+    }
+
 }
 
-let getPublicKey2 = async (P2) => {
+let getPublicKey2 = async(P2, time) => {
     let token = getJWT()
     if (token === null || typeof token === 'undefined') {
         console.log('token is none')
         return null
     }
-    let res = await axios.get('https://key.project15.tk:8443/publickey2', {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'P2': JSON.stringify(P2["a_"])
+    try {
+        let res = await axios.get('https://key.project15.tk/api/publickey2', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'P2': JSON.stringify(P2.serialize()),
+                'time': time
+            }
+        })
+        let len = Object.keys(res.data).length
+        console.log(res.data[0])
+        let data = new Uint8Array(len)
+        for (i = 0; i < len; i++) {
+            data[i] = res.data[i]
         }
-    })
-    return res.data //可能な形にして
+        let key = new mcl.G2()
+        key.deserialize(data)
+        return key
+    } catch (e) {
+        dom.getElementById('log').innerText = e
+        return null
+    }
+
 }

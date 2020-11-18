@@ -25,7 +25,7 @@ let generateSign = (S_KEY, msg, P1, P2, k) => {
     return [S_G1, R_G2]
 }
 
-let signByIBS = async () => {
+let signByIBS = async() => {
     //本文取得
     let text = dom.getElementById('textDoc')
     let msg = text.value
@@ -47,8 +47,8 @@ let signByIBS = async () => {
     //署名生成
     let [S, R] = generateSign(S_KEY, msg, P1, P2, k)
     let sigInfo = {}
-    sigInfo['P1'] = P1//.getStr(16)
-    sigInfo['P2'] = P2//.getStr(16)
+    sigInfo['P1'] = P1 //.getStr(16)
+    sigInfo['P2'] = P2 //.getStr(16)
     sigInfo['S'] = S
     sigInfo['R'] = R
 

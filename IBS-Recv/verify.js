@@ -9,11 +9,14 @@
 
     return:署名文
 */
-let verifySign = async (decMsg, P_KEY) => {
+let verifySign = async(decMsg, P_KEY, time) => {
     const [msg, P1, P2, S, R] = parseParam(decMsg)
 
     let Ppub = new mcl.G2()
-    let data = await getPublicKey2(P2)
+    let data = await getPublicKey2(P2, time)
+    if (data == null) {
+        return "公開鍵を得られませんでした", false
+    }
     for (let i = 0; i < Ppub["a_"].length; i++) {
         Ppub["a_"][i] = data["a_"][i]
     }
@@ -33,10 +36,13 @@ let verifySign = async (decMsg, P_KEY) => {
     return [msg, sig.getStr(16) == eP2.getStr(16)]
 }
 
-let verifyByIBS = async (recvBody, myID, srcID) => {
-    let decMsg = await decBody(recvBody.innerText, myID)
-
-    let [msg, validity] = await verifySign(decMsg, srcID)
+let verifyByIBS = async(recvBody, myID, srcID, time) => {
+    let decMsg = await decBody(recvBody.innerText, myID, time)
+    if (decMsg == null) {
+        window.alert("秘密鍵が得られませんでした")
+        return
+    }
+    let [msg, validity] = await verifySign(decMsg, srcID, time)
 
     recvBody.innerText = msg
     window.alert(validity ? "〇有効〇" : "×無効×")

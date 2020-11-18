@@ -1,16 +1,22 @@
-let decBody = async (recvBody, myID) => {
+let decBody = async(recvBody, myID, time) => {
     let rawMsg = JSON.parse(recvBody)
     let encKey = rawMsg['encKey']
     let encMsg = rawMsg['encMsg']
 
-    let AESkey = await decKeyByIBE(encKey, myID)
+    let AESkey = await decKeyByIBE(encKey, myID, time)
+    if (AESkey == null) {
+        return null
+    }
     let decMsg = CryptoJS.AES.decrypt(encMsg, AESkey).toString(CryptoJS.enc.Utf8)
     return JSON.parse(decMsg)
 }
 
-let decKeyByIBE = async (encKey, myID) => {
+let decKeyByIBE = async(encKey, myID, time) => {
     let S_KEY = new mcl.G2()
-    let data = await getSecretKey2(myID)
+    let data = await getSecretKey2(myID, time)
+    if (data == null) {
+        return null
+    }
     for (let i = 0; i < S_KEY["a_"].length; i++) {
         S_KEY["a_"][i] = data["a_"][i]
     }
@@ -31,4 +37,3 @@ let IDdec = (c, sk) => {
     const e = mcl.pairing(U, sk)
     return mcl.sub(v, mcl.hashToFr(e.serialize()))
 }
-

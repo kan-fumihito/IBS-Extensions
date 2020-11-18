@@ -1,38 +1,35 @@
 {
-  "name": "IBS-Send",
-  "version": "1.0.0",
-  "manifest_version": 2,
-  "description": "For FUNmail",
-  "permissions": [
-    "https://www.googleapis.com/*",
-    "https://key.project15.tk/*",
-    "https://key.project15.tk:8443/*",
-    "webRequest"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://webmail.fun.ac.jp/cgi-bin/htmlparse.cgi?html=composerframe.html"
-      ],
-      "js": [
-        "jquery-3.5.1.js",
-        "axios.js",
-        "firebase-app.js",
-        "firebase-auth.js",
-        "content.js",
-        "init.js",
-        "utils.js",
-        "key.js",
-        "encrypt.js",
-        "sign.js",
-        "mcl.js",
-        "mcl_c384_256.js",
-        "js/crypto-js.js",
-        "js/aes.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-  ],
-  "content_security_policy": "script-src 'self' 'wasm-eval' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/* https://cdn.jsdelivr.net; object-src 'self'"
+    "name": "IBS-Send",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "description": "For FUNmail",
+    "permissions": [
+        "https://www.googleapis.com/*",
+        "https://key.project15.tk/*",
+        "webRequest"
+    ],
+    "content_scripts": [{
+        "matches": [
+            "https://webmail.fun.ac.jp/cgi-bin/htmlparse.cgi?html=composerframe.html"
+        ],
+        "js": [
+            "jquery-3.5.1.js",
+            "axios.js",
+            "firebase-app.js",
+            "firebase-auth.js",
+            "content.js",
+            "init.js",
+            "utils.js",
+            "key.js",
+            "encrypt.js",
+            "sign.js",
+            "mcl.js",
+            "mcl_c384_256.js",
+            "js/crypto-js.js",
+            "js/aes.js"
+        ],
+        "run_at": "document_end",
+        "all_frames": true
+    }],
+    "content_security_policy": "script-src 'self' 'wasm-eval' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/* https://cdn.jsdelivr.net; object-src 'self'"
 }

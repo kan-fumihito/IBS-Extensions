@@ -10,8 +10,6 @@ window.onload = () => {
     initFirebase()
 
     loadScript('https://key.project15.tk/mcl_c384_256.js', () => {
-        mcl.init(0).then(() => {
-        })
+        mcl.init(0).then(() => {})
     })
 }
-

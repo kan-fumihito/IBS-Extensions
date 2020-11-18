@@ -1,5 +1,5 @@
 let initUI = () => {
-    let SendByIBS = async () => {
+    let SendByIBS = async() => {
         let toList = dom.getElementById('tolist')
         if (toList.children.length == 1) {
             email = toList.children[0].getAttribute('email')
@@ -29,13 +29,14 @@ let initUI = () => {
 
     let signdiv = dom.createElement('div')
     signdiv.innerHTML = `
-    <h2>Sign in</h2>
+    <div style="margin-left: 10px;">
+        <h2>Sign in</h2>
         <input id="emailIBS" type="text" placeholder="email">
         <input id="passwordIBS" type="password" placeholder="Password">
-        <button id="SignIn" type="button">Signin</button>
-        <a href="https://key.project15.tk/signup">Sign Up</a>
-        <p id="log">
-        </p>`
+        <input id="SignIn" type="button" value="Signin">
+        <a href="https://key.project15.tk/signup" target="_blank" rel="noopener norefferer">Sign Up</a>
+        <p id="log"></p>
+    </div>`
     menu.before(signdiv)
 
     let signinBtn = dom.getElementById('SignIn')
@@ -62,4 +63,3 @@ let initFirebase = () => {
     };
     firebase.initializeApp(config);
 }
-
