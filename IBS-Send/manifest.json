@@ -10,7 +10,7 @@
     ],
     "content_scripts": [{
         "matches": [
-            "https://webmail.fun.ac.jp/cgi-bin/htmlparse.cgi?html=composerframe.html"
+            "https://webmail.fun.ac.jp/cgi-bin/htmlparse.cgi?html=composerframe.html*"
         ],
         "js": [
             "jquery-3.5.1.js",

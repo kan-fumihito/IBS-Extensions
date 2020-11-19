@@ -7,8 +7,13 @@ let decBody = async(recvBody, myID, time) => {
     if (AESkey == null) {
         return null
     }
-    let decMsg = CryptoJS.AES.decrypt(encMsg, AESkey).toString(CryptoJS.enc.Utf8)
-    return JSON.parse(decMsg)
+
+    try {
+        let decMsg = CryptoJS.AES.decrypt(encMsg, AESkey).toString(CryptoJS.enc.Utf8)
+        return JSON.parse(decMsg)
+    } catch (e) {
+        dom2.getElementById('log').innerText = "復号失敗"
+    }
 }
 
 let decKeyByIBE = async(encKey, myID, time) => {

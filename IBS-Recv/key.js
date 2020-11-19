@@ -14,7 +14,6 @@ let getSecretKey2 = async(ID, time) => {
             }
         })
         let len = Object.keys(res.data).length
-        console.log(res.data[0])
         let data = new Uint8Array(len)
         for (i = 0; i < len; i++) {
             data[i] = res.data[i]
@@ -23,7 +22,7 @@ let getSecretKey2 = async(ID, time) => {
         key.deserialize(data)
         return key
     } catch (e) {
-        dom.getElementById('log').innerText = e
+        dom2.getElementById('log').innerText = e
         return null
     }
 
@@ -44,7 +43,6 @@ let getPublicKey2 = async(P2, time) => {
             }
         })
         let len = Object.keys(res.data).length
-        console.log(res.data[0])
         let data = new Uint8Array(len)
         for (i = 0; i < len; i++) {
             data[i] = res.data[i]
@@ -53,7 +51,7 @@ let getPublicKey2 = async(P2, time) => {
         key.deserialize(data)
         return key
     } catch (e) {
-        dom.getElementById('log').innerText = e
+        dom2.getElementById('log').innerText = e
         return null
     }
 

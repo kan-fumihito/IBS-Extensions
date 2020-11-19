@@ -35,6 +35,7 @@ let signByIBS = async() => {
     let P2 = getParam2()
     let k = new mcl.Fr()
     k.setByCSPRNG()
+    k.deserialize(k.serialize())
 
     //ID公開鍵,秘密鍵,PKG公開鍵取得
     let P_KEY = dom.getElementById('fromWrap').innerText
