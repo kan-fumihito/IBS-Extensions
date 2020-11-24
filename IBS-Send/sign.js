@@ -25,11 +25,11 @@ let generateSign = (S_KEY, msg, P1, P2, k) => {
     return [S_G1, R_G2]
 }
 
-let signByIBS = async() => {
+let signByIBS = async(msg) => {
     //本文取得
-    let text = dom.getElementById('textDoc')
+    /*let text = dom.getElementById('textDoc')
     let msg = text.value
-
+*/
     // 公開パラメータ,乱数取得
     let P1 = getParam1()
     let P2 = getParam2()

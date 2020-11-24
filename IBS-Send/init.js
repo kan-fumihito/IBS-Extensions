@@ -4,11 +4,18 @@ let initUI = () => {
         if (toList.children.length == 1) {
             email = toList.children[0].getAttribute('email')
             if (isFun(email)) {
-                let sigInfo = await signByIBS() //署名検証に必要な情報をMapで受け取る
+                /*let sigInfo = await signByIBS() //署名検証に必要な情報をMapで受け取る
                 let sendBody = {}
                 sendBody['msg'] = dom.getElementById('textDoc').value
                 sendBody['sigInfo'] = sigInfo
-                dom.getElementById('textDoc').value = await encBody(email, sigInfo['P1'], JSON.stringify(sendBody))
+                dom.getElementById('textDoc').value = await encBody(email, sigInfo['P1'], JSON.stringify(sendBody))*/
+
+                let msg = dom.getElementById('textDoc').value
+                let sigInfo = await signByIBS(msg)
+                let begin = "\n-----BEGIN SIGNATURE-----\n"
+                let end = "\n-----END SIGNATURE-----"
+                dom.getElementById('textDoc').value = msg + begin + JSON.stringify(sigInfo) + end
+
             }
         }
         dom.getElementById('sendBtn').children[0].click()

@@ -40,13 +40,15 @@ let verifySign = async(decMsg, P_KEY, time) => {
     }
 }
 
-let verifyByIBS = async(recvBody, myID, srcID, time) => {
-    let decMsg = await decBody(recvBody.innerText, myID, time)
+let verifyByIBS = async(recvBody, srcID, time) => {
+    //let decMsg = await decBody(recvBody.innerText, myID, time)
     if (decMsg == null) {
         window.alert("復号に失敗しました")
         return
     }
-    let [msg, validity] = await verifySign(decMsg, srcID, time)
+    let recvMsg = recvBody.innerText
+
+    let [msg, validity] = await verifySign(recvMsg, srcID, time)
 
     recvBody.innerText = msg
     window.alert(validity ? "〇有効〇" : "×無効×")
