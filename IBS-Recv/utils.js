@@ -3,9 +3,8 @@ let isFun = (email) => {
     return pattern.test(email)
 }
 
-let parseParam = (decMsg) => {
-    let msg = decMsg['msg']
-    let sigInfo = decMsg['sigInfo']
+let parseParam = (sig) => {
+    let sigInfo = JSON.parse(sig)
     let rawP1 = sigInfo['P1']
     let rawP2 = sigInfo['P2']
     let rawS = sigInfo['S']
@@ -29,7 +28,7 @@ let parseParam = (decMsg) => {
         R["a_"][i] = rawR["a_"][i]
     }
 
-    return [msg, P1, P2, S, R]
+    return [P1, P2, S, R]
 }
 
 let getJWT = () => {
