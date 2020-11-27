@@ -20,6 +20,14 @@ let isFun = (email) => {
     return pattern.test(email)
 }
 
+String.prototype.before = function(word, include) {
+    var idx = this.indexOf(word)
+    var l = include ? word.length : 0
+    return idx >= 0 ?
+        this.substr(0, idx + l) :
+        ""
+}
+
 let getJWT = () => {
     return localStorage.getItem('jwt')
 }

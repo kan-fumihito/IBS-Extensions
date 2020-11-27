@@ -9,19 +9,13 @@
 
     return:署名文
 */
-
-String.prototype.before = function(word, include) {
-    var idx = this.indexOf(word)
-    var l = include ? word.length : 0
-    return idx >= 0 ?
-        this.substr(0, idx + l) :
-        ""
-}
-
-let verifySign = async(msg, sign, P_KEY, time) => {
+let verifySign = async(rowMsg, sign, P_KEY, time) => {
     try {
         const [P1, P2, S, R] = parseParam(sign)
-
+        let msg = rowMsg
+        if (rowMsg.includes('\n----- Original Message -----')) {
+            msg = rowMsg.before('\n----- Original Message -----')
+        }
         let Ppub = new mcl.G2()
         let data = await getPublicKey2(P2, time)
         if (data == null) {
@@ -43,10 +37,10 @@ let verifySign = async(msg, sign, P_KEY, time) => {
         let eP2 = mcl.mul(eP1, PQ1)
         let sig = mcl.pairing(S, R)
         console.log(msg)
-        return [msg, sig.isEqual(eP2)]
+        return [rowMsg, sig.isEqual(eP2)]
     } catch (e) {
         console.log(e)
-        return [msg, false]
+        return [rowMsg, false]
     }
 }
 
@@ -61,6 +55,7 @@ let verifyByIBS = async(recvBody, myID, srcID, time) => {
     let plaMsg = recvBody.innerText.split("\n-----BEGIN SIGNATURE-----\n") //上下分割
     let payMsg = plaMsg[0]
     let signat = plaMsg[1].before("\n-----END SIGNATURE-----") //下部削除
+
 
 
     //let finMsg = msg.before( "\n-----BEGIN SIGNATURE-----\n" );

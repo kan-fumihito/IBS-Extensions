@@ -10,11 +10,15 @@ let initUI = () => {
                 sendBody['sigInfo'] = sigInfo
                 dom.getElementById('textDoc').value = await encBody(email, sigInfo['P1'], JSON.stringify(sendBody))*/
 
-                let msg = dom.getElementById('textDoc').value
+                let rowMsg = dom.getElementById('textDoc').value
+                let msg = rowMsg
+                if (rowMsg.includes('\n----- Original Message -----')) {
+                    msg = rowMsg.before('\n----- Original Message -----')
+                }
                 let sigInfo = await signByIBS(msg)
                 let begin = "\n-----BEGIN SIGNATURE-----\n"
                 let end = "\n-----END SIGNATURE-----"
-                dom.getElementById('textDoc').value = msg + begin + JSON.stringify(sigInfo) + end
+                dom.getElementById('textDoc').value = rowMsg + begin + JSON.stringify(sigInfo) + end
 
             }
         }
